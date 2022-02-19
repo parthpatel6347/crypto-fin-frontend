@@ -33,7 +33,7 @@ function AuthState(props) {
             setHeaderToken(localStorage.token)
         }
 
-        axios.get('/api/auth/users/me/')
+        axios.get('https://crypto-fin.herokuapp.com/api/auth/users/me/')
             .then(res => {
                 dispatch({ type: USER_LOADED, payload: res.data })
             })
@@ -57,7 +57,7 @@ function AuthState(props) {
 
     const login = async (formData) => {
 
-        axios.post("/api/auth/token/login", formData)
+        axios.post("https://crypto-fin.herokuapp.com/api/auth/token/login", formData)
             .then((res) => {
                 dispatch({ type: LOGIN_SUCCESS, payload: res.data });
                 loadUser();
