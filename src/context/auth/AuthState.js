@@ -44,7 +44,7 @@ function AuthState(props) {
 
     const register = async (formData) => {
 
-        return axios.post('/api/auth/users/', formData)
+        return axios.post('https://crypto-fin.herokuapp.com/api/auth/users/', formData)
             .then((res) => {
                 dispatch({ type: REGISTER_SUCCESS, payload: res.data })
                 return "success"
@@ -69,7 +69,7 @@ function AuthState(props) {
 
     const getWallet = async (userid) => {
 
-        axios.get(`/api/wallet/?user=${userid}`)
+        axios.get(`https://crypto-fin.herokuapp.com/api/wallet/?user=${userid}`)
             .then(res => {
                 dispatch({ type: WALLET_SUCCESS, payload: res.data })
             })
@@ -82,7 +82,7 @@ function AuthState(props) {
         if (localStorage.token) {
             setHeaderToken(localStorage.token)
         }
-        axios.post('/api/auth/token/logout', localStorage.token)
+        axios.post('https://crypto-fin.herokuapp.com/api/auth/token/logout', localStorage.token)
             .then(res => {
                 dispatch({ type: LOGOUT });
             })
