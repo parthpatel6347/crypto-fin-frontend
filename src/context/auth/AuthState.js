@@ -56,6 +56,7 @@ function AuthState(props) {
     }
 
     const login = async (formData) => {
+        setHeaderToken(null)
 
         axios.post("https://crypto-fin.herokuapp.com/api/auth/token/login", formData)
             .then((res) => {
@@ -85,6 +86,7 @@ function AuthState(props) {
         axios.post('https://crypto-fin.herokuapp.com/api/auth/token/logout', localStorage.token)
             .then(res => {
                 dispatch({ type: LOGOUT });
+                localStorage.setItem('token', null)
             })
     };
 

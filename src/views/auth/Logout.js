@@ -1,26 +1,30 @@
 import React, { useEffect, Fragment, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import authContext from '../../context/auth/authContext';
 import { LogoutButton, Main, StyledText } from '../../styles/LogoutStyles';
 
-const Logout = () => {
+const Logout = ({ hideModal }) => {
 
-  const { logout, loading } = useContext(authContext)
+  const { logout, loading, token } = useContext(authContext)
+
+  let navigate = useNavigate();
 
 
   useEffect(() => {
     // If there is no token, redirect to login
-    if (localStorage.getItem('token') == null) {
-      window.location.replace('http://localhost:3000/login');
+    if (!token) {
+      navigate('/login');
     }
-  }, []);
+  }, [token]);
 
   const handleLogout = e => {
     e.preventDefault();
 
     logout()
       .then(res => {
-        localStorage.clear();
-        window.location.replace('http://localhost:3000/login');
+        hideModal();
+        navigate('/login');
       });
   };
 

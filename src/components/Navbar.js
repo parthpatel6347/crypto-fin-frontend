@@ -43,7 +43,7 @@ const Navbar = () => {
         </NavLinksContainer>
       </NavbarInner>
       <Modal show={show} onHide={handleClose}>
-        <Logout />
+        <Logout hideModal={handleClose} />
       </Modal>
     </NavbarContainer>
   );

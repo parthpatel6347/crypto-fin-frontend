@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import AuthState from './context/auth/AuthState';
 import Login from './views/auth/Login';
