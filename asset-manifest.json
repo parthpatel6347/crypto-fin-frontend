@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/crypto-fin-frontend/static/css/main.4a473500.css",
+    "main.js": "/crypto-fin-frontend/static/js/main.9d35ed66.js",
+    "index.html": "/crypto-fin-frontend/index.html",
+    "main.4a473500.css.map": "/crypto-fin-frontend/static/css/main.4a473500.css.map",
+    "main.9d35ed66.js.map": "/crypto-fin-frontend/static/js/main.9d35ed66.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4a473500.css",
+    "static/js/main.9d35ed66.js"
+  ]
+}
