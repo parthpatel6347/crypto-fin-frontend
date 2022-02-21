@@ -23,7 +23,8 @@ function AuthState(props) {
         user: null,
         error: null,
         wallet: null,
-        walletLoading: true
+        walletLoading: true,
+        authLoading: false
     }
 
     const [state, dispatch] = useReducer(authReducer, initialState)
@@ -58,13 +59,15 @@ function AuthState(props) {
     const login = async (formData) => {
         setHeaderToken(null)
 
-        axios.post("https://crypto-fin.herokuapp.com/api/auth/token/login", formData)
+        return axios.post("https://crypto-fin.herokuapp.com/api/auth/token/login", formData)
             .then((res) => {
                 dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-                loadUser();
+                return "success"
+                // loadUser();
             })
             .catch((err) => {
                 dispatch({ type: LOGIN_FAIL, payload: err.response.data });
+                return "error"
             });
     };
 

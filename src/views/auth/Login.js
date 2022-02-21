@@ -2,29 +2,42 @@ import React, { useState, useEffect, useContext } from 'react';
 import authContext from '../../context/auth/authContext';
 import { useNavigate } from 'react-router-dom';
 import { ErrorText, FormContainer, HeaderText, Main, SubmitButton } from '../../styles/Login.Styles';
-import { Form } from 'react-bootstrap'
+import { Form, Spinner } from 'react-bootstrap'
 
 const Login = (props) => {
 
   // State for form fields
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
 
   let navigate = useNavigate();
 
   const { login, error, loadUser, token, clearErrors } = useContext(authContext)
 
-  useEffect(() => {
-    clearErrors()
-    // if token in local storage, load user and redirect to dashboard
-    if (token) {
-      loadUser().then(() => navigate('/dashboard'));
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   clearErrors()
+  //   // if token in local storage, load user and redirect to dashboard
+  //   if (token) {
+  //     loadUser().then(() => navigate('/dashboard'));
+  //   }
+  // }, [token]);
 
   const onSubmit = e => {
     e.preventDefault();
-    login({ email, password })
+
+    setLoading(true)
+    login({ email, password }).then(res => {
+      if (res === "success") {
+        setLoading(false)
+        navigate('/dashboard');
+      } else {
+        setEmail('')
+        setPassword('')
+        setLoading(false)
+      }
+    })
   };
 
   return (
@@ -41,7 +54,13 @@ const Login = (props) => {
             <Form.Label>Password</Form.Label>
             <Form.Control onChange={e => setPassword(e.target.value)} name='password' type="password" placeholder="Password" value={password} required />
           </Form.Group>
-          <SubmitButton type="submit">Log in</SubmitButton>
+          <SubmitButton type="submit" disabled={loading}>{loading ? (
+            <Spinner
+              style={{ color: "#FFF" }}
+              size="sm"
+              animation="border"
+            />
+          ) : "Log in"}</SubmitButton>
         </Form>
       </FormContainer>
     </Main>

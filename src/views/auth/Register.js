@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import authContext from '../../context/auth/authContext';
 import { ErrorText, FormContainer, HeaderText, Main, SubmitButton } from '../../styles/Login.Styles';
-import { Form } from 'react-bootstrap'
+import { Form, Spinner } from 'react-bootstrap'
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -14,6 +15,7 @@ const Register = (props) => {
   const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const [errors, setErrors] = useState([])
 
@@ -21,13 +23,13 @@ const Register = (props) => {
 
   const { register, error, isAuthenticated, token, loadUser, clearErrors } = useContext(authContext)
 
-  useEffect(() => {
-    clearErrors();
-    // if there is a token in localstorage, load that user and redirect to dashboard
-    if (token) {
-      loadUser().then(() => navigate('/dashboard'));
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   clearErrors();
+  //   // if there is a token in localstorage, load that user and redirect to dashboard
+  //   if (token) {
+  //     loadUser().then(() => navigate('/dashboard'));
+  //   }
+  // }, [token]);
 
   useEffect(() => {
     // if error, prepare a array of error description and set to 'errors' state
@@ -42,6 +44,7 @@ const Register = (props) => {
 
   const onSubmit = e => {
     e.preventDefault();
+    setLoading(true)
 
     register({
       username: username,
@@ -52,6 +55,7 @@ const Register = (props) => {
       last_name: lastName,
     }).then(res => {
       if (res === "success") {
+        setLoading(false)
         navigate('/login');
       } else {
         setFirstName('')
@@ -60,6 +64,7 @@ const Register = (props) => {
         setEmail('')
         setPassword1('')
         setPassword2('')
+        setLoading(false)
       }
     })
   };
@@ -130,7 +135,13 @@ const Register = (props) => {
               placeholder="Confirm Password"
               autoComplete='off' />
           </Form.Group>
-          <SubmitButton type='submit'>Sign up</SubmitButton>
+          <SubmitButton type='submit' disabled={loading}>{loading ? (
+            <Spinner
+              style={{ color: "#FFF" }}
+              size="sm"
+              animation="border"
+            />
+          ) : "Sign up"}</SubmitButton>
         </Form>
       </FormContainer>
     </Main>
