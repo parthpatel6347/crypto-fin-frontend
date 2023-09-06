@@ -18,7 +18,7 @@ function Transaction({ coinData, user, userCoin }) {
         e.preventDefault()
 
         // send transaction request
-        axios.post("https://crypto-fin.herokuapp.com/api/transact/", {
+        axios.post("http://parthpatel6347.pythonanywhere.com/api/transact/", {
             "user": user.id,
             "symbol": coinData.id,
             "price": coinData.market_data.current_price.usd,
@@ -34,7 +34,7 @@ function Transaction({ coinData, user, userCoin }) {
             })
             .then(() => {
                 // deduct cash from user acc
-                axios.patch('https://crypto-fin.herokuapp.com/api/auth/users/me/', {
+                axios.patch('http://parthpatel6347.pythonanywhere.com/api/auth/users/me/', {
                     "cash": user.cash - buyQty
                 }, {
                     headers: {
@@ -60,7 +60,7 @@ function Transaction({ coinData, user, userCoin }) {
     const handleSell = (e) => {
         e.preventDefault()
 
-        axios.post("https://crypto-fin.herokuapp.com/api/transact/", {
+        axios.post("http://parthpatel6347.pythonanywhere.com/api/transact/", {
             "user": user.id,
             "symbol": coinData.id,
             "price": coinData.market_data.current_price.usd,
@@ -75,7 +75,7 @@ function Transaction({ coinData, user, userCoin }) {
                 console.log(res.data)
             })
             .then(() => {
-                axios.patch('https://crypto-fin.herokuapp.com/api/auth/users/me/', {
+                axios.patch('http://parthpatel6347.pythonanywhere.com/api/auth/users/me/', {
                     "cash": parseFloat(user.cash) + parseFloat((sellQty * coinData.market_data.current_price.usd).toFixed(2))
                 }, {
                     headers: {
