@@ -34,7 +34,7 @@ function AuthState(props) {
             setHeaderToken(localStorage.token)
         }
 
-        axios.get('http://parthpatel6347.pythonanywhere.com/api/auth/users/me/')
+        axios.get('https://parthpatel6347.pythonanywhere.com/api/auth/users/me/')
             .then(res => {
                 dispatch({ type: USER_LOADED, payload: res.data })
             })
@@ -45,7 +45,7 @@ function AuthState(props) {
 
     const register = async (formData) => {
 
-        return axios.post('http://parthpatel6347.pythonanywhere.com/api/auth/users/', formData)
+        return axios.post('https://parthpatel6347.pythonanywhere.com/api/auth/users/', formData)
             .then((res) => {
                 dispatch({ type: REGISTER_SUCCESS, payload: res.data })
                 return "success"
@@ -59,7 +59,7 @@ function AuthState(props) {
     const login = async (formData) => {
         setHeaderToken(null)
 
-        return axios.post("http://parthpatel6347.pythonanywhere.com/api/auth/token/login", formData)
+        return axios.post("https://parthpatel6347.pythonanywhere.com/api/auth/token/login", formData)
             .then((res) => {
                 dispatch({ type: LOGIN_SUCCESS, payload: res.data });
                 return "success"
@@ -73,7 +73,7 @@ function AuthState(props) {
 
     const getWallet = async (userid) => {
 
-        axios.get(`http://parthpatel6347.pythonanywhere.com/api/wallet/?user=${userid}`)
+        axios.get(`https://parthpatel6347.pythonanywhere.com/api/wallet/?user=${userid}`)
             .then(res => {
                 dispatch({ type: WALLET_SUCCESS, payload: res.data })
             })
@@ -86,7 +86,7 @@ function AuthState(props) {
         if (localStorage.token) {
             setHeaderToken(localStorage.token)
         }
-        axios.post('http://parthpatel6347.pythonanywhere.com/api/auth/token/logout', localStorage.token)
+        axios.post('https://parthpatel6347.pythonanywhere.com/api/auth/token/logout', localStorage.token)
             .then(res => {
                 dispatch({ type: LOGOUT });
                 localStorage.setItem('token', null)
